@@ -3,10 +3,7 @@
 #include <string.h>
 #include <math.h>
 
-//                         Lucas garavaglia cova
-//                         NUSP 8956449
-
-// Declaração de funções
+// DeclaraÃ§Ã£o de funÃ§Ãµes
 double** coef(double **A, int tam);
 double** alocarMatriz(int Linhas,int Colunas);
 double* ResolveSis(double** L, int tam, double* b);
@@ -31,15 +28,15 @@ int main()
     f = fopen("PRECOS.txt", "r");
     fscanf(f, "%d/n", &Natv); printf("%d\n",Natv); // Armazena o numero de ativos
 
-    double **P = (double**) alocarMatriz(100,Natv); // aloca memória para a matriz de preços dos ativos
+    double **P = (double**) alocarMatriz(100,Natv); // aloca memÃ³ria para a matriz de preÃ§os dos ativos
 
-    for(i = 0; i < 56; i++) // não consegui lidar genericamente com os nomes dos ativos por isso fiz este loop especificamente para o txt PRECOS
+    for(i = 0; i < 56; i++) // nÃ£o consegui lidar genericamente com os nomes dos ativos por isso fiz este loop especificamente para o txt PRECOS
     {
         fscanf(f, "%s", &str);
         printf("%s",str);
     }
     printf("\n");
-    for(i = 0; i < 100; i++) // não consegui lidar genericamente com a quantidade de linhas da tabela de PRECOS então tive de fazer um for para setar um fim manualmente
+    for(i = 0; i < 100; i++) // nÃ£o consegui lidar genericamente com a quantidade de linhas da tabela de PRECOS entÃ£o tive de fazer um for para setar um fim manualmente
     {
         fscanf(f, "%s", &str); // le a data
         printf("%s ",str); // imprime a data
@@ -53,7 +50,7 @@ int main()
     }
 
     double** mR = matrR( P, Natv, 100); // gera matriz com os Rij
-    double* U = esper( mR, Natv, 100); // gera vetor R que armazena as esperanças
+    double* U = esper( mR, Natv, 100); // gera vetor R que armazena as esperanÃ§as
     double* Sigma = varian( mR, U, Natv, 100); // gera vetor de variancias
     double** Q = Covarian( mR, U, Natv, 100); // gera matriz de covariancia
     double** L = coef( Q, Natv); // gera matriz L relativa a matriz de covariancia Q
@@ -67,7 +64,7 @@ int main()
     v = ResolveSis(L, Natv, uns); // Resolve sistema linear Q*v = 1
 
     double e[17] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-    double **Qinv = (double**) alocarMatriz(Natv,Natv); // aloca memória para a matriz inversa
+    double **Qinv = (double**) alocarMatriz(Natv,Natv); // aloca memÃ³ria para a matriz inversa
     for(k=0; k<Natv; k++)
     {
         e[k] = 1;
@@ -96,7 +93,7 @@ int main()
             max = U[k];
         }
     }
-    // derivando a equação 7 e igualando a 0 temos o min de mi = B/A
+    // derivando a equaÃ§Ã£o 7 e igualando a 0 temos o min de mi = B/A
     double min = B/A;
     double media = (max+min)/2;
 
@@ -130,9 +127,9 @@ int main()
     w_med = som_vec( v111, v222, Natv);
 
 
-    // Faremos agora oa prints dos dados de interesse do problema. Cada passo será impresso no terminal
+    // Faremos agora oa prints dos dados de interesse do problema. Cada passo serÃ¡ impresso no terminal
 
-    // impressão de matriz de Retornos ( Contém os Rij que usados nos calculos )
+    // impressÃ£o de matriz de Retornos ( ContÃ©m os Rij que usados nos calculos )
     printf("------  Matriz de Retornos: \n");
     for(k=0; k<Natv-1; k++)
     {
@@ -143,15 +140,15 @@ int main()
         printf("\n");
     }
 
-    // impressão de vetor de esperanças ( Vetor R )
-    printf("------  (vetor R) Esperança: \n");
+    // impressÃ£o de vetor de esperanÃ§as ( Vetor R )
+    printf("------  (vetor R) EsperanÃ§a: \n");
     for(k=0; k<Natv; k++)
     {
         printf("%f ",U[k]);
         printf("\n");
     }
 
-    // impressão de vetor de Variancias ( Note que estes valores correspondem a diagonal da matriz de covariancia )
+    // impressÃ£o de vetor de Variancias ( Note que estes valores correspondem a diagonal da matriz de covariancia )
     printf("------  Variancia: \n");
     for(k=0; k<Natv; k++)
     {
@@ -159,7 +156,7 @@ int main()
         printf("\n");
     }
 
-    // impressão de matriz de covariancia
+    // impressÃ£o de matriz de covariancia
     printf("------ Covariancia: \n");
     for(k=0; k<Natv; k++)
     {
@@ -170,7 +167,7 @@ int main()
         printf("\n");
     }
 
-    // impressão de matriz da decomposição L relativa a Q (matriz de covariancia)
+    // impressÃ£o de matriz da decomposiÃ§Ã£o L relativa a Q (matriz de covariancia)
     printf("------ L: \n");
     for(k=0; k<Natv; k++)
     {
@@ -181,23 +178,23 @@ int main()
         printf("\n");
     }
 
-    // impressão da solução do sistema Q*u = R
-    printf("------  solução de u: \n");
+    // impressÃ£o da soluÃ§Ã£o do sistema Q*u = R
+    printf("------  soluÃ§Ã£o de u: \n");
     for(k=0; k<Natv; k++)
     {
         printf("%f ",u[k]);
         printf("\n");
     }
 
-    // impressão da solução do sistema Q*v = 1
-    printf("------  solução de v: \n");
+    // impressÃ£o da soluÃ§Ã£o do sistema Q*v = 1
+    printf("------  soluÃ§Ã£o de v: \n");
     for(k=0; k<Natv; k++)
     {
         printf("%f ",v[k]);
         printf("\n");
     }
 
-    // impressão de Qinv
+    // impressÃ£o de Qinv
     printf("------  Qinv: \n");
     for(k=0; k<Natv; k++)
     {
@@ -208,13 +205,13 @@ int main()
         printf("\n");
     }
 
-    // impressão de A
+    // impressÃ£o de A
     printf("\n------  A: \n A = %f \n",A);
 
-    // impressão de B
+    // impressÃ£o de B
     printf("\n------  B: \n B = %f \n",B);
 
-    // impressão de C
+    // impressÃ£o de C
     printf("\n------  C: \n C = %f \n\n",C);
 
     // portifolio min
@@ -284,7 +281,7 @@ double** Covarian(double** mR,double* U,int tam, int lin)
 {
     int i; int j; int k;// contadores
     double som; // var aux
-    int n = lin-1; // n é o numero de linhas de R
+    int n = lin-1; // n Ã© o numero de linhas de R
     double **Q = alocarMatriz(tam,tam);
 
 
@@ -337,7 +334,7 @@ double* varian(double** mR, double* U,int tam, int lin)
 {
     int i; int j; // contadores
     double som; // var aux
-    int n = lin-1; // n é o numero de linhas de R
+    int n = lin-1; // n Ã© o numero de linhas de R
     double *Sigma = (double*)malloc((tam) * sizeof(double));
     for(j = 0; j < tam; j++) // para cada coluna
     {
@@ -354,25 +351,25 @@ double* varian(double** mR, double* U,int tam, int lin)
 double* esper(double** mR,int tam,int lin)
 {
     int i; int j; // contadores
-    int n = lin-1; // n é o numero de linhas de R
+    int n = lin-1; // n Ã© o numero de linhas de R
     double *U = (double*)malloc((tam) * sizeof(double));
     for(j = 0; j < tam; j++) // para cada coluna
     {
-        U[j] = 0; // inicializa elemento do vetor de esperanças
+        U[j] = 0; // inicializa elemento do vetor de esperanÃ§as
         for(i = 0; i < n; i++) // para cada linha
         {
-            U[j] += mR[i][j]; // calcula somatorio da esperança
+            U[j] += mR[i][j]; // calcula somatorio da esperanÃ§a
         }
-        U[j] = U[j]/(n); // finaliza o calculo do elemento do vetor de esperanças e armazena
+        U[j] = U[j]/(n); // finaliza o calculo do elemento do vetor de esperanÃ§as e armazena
     }
 
-    return U; // retorna vetor de esperanças de tamanho tam
+    return U; // retorna vetor de esperanÃ§as de tamanho tam
 }
 
 double** matrR(double** P,int tam, int lin)
 {
     int i; int j; // contadores
-    double **mR = alocarMatriz(lin-1,tam); // Alocamos a matiz (Tem linha a menos pois não tem R definido para o primeiro elemento)
+    double **mR = alocarMatriz(lin-1,tam); // Alocamos a matiz (Tem linha a menos pois nÃ£o tem R definido para o primeiro elemento)
     for(j = 0; j < tam; j++) // para cada coluna
     {
         for(i = 1; i < 100; i++) // para cada linha
@@ -384,7 +381,7 @@ double** matrR(double** P,int tam, int lin)
     return mR; // retorna matriz de Retornos de tamanho lin-1 x tam
 }
 
-double* ResolveSis(double** L, int tam, double* b) // Resolve sistema L*x = b para uma matriz L obtida pela decomposição
+double* ResolveSis(double** L, int tam, double* b) // Resolve sistema L*x = b para uma matriz L obtida pela decomposiÃ§Ã£o
 {
     int i = 0; int j = 0; // inicializa contadores
     double ly; double lx; // declara variaveis auxiliares
@@ -458,14 +455,14 @@ double** coef (double **A, int tam)
     return L;
 }
 
-double** alocarMatriz(int Linhas,int Colunas){ //Recebe a quantidade de Linhas e Colunas como Parâmetro
+double** alocarMatriz(int Linhas,int Colunas){ //Recebe a quantidade de Linhas e Colunas como ParÃ¢metro
 
-  int i,j; //Variáveis Auxiliares
+  int i,j; //VariÃ¡veis Auxiliares
 
   double **m = (double**)malloc(Linhas * sizeof(double*)); //Aloca um Vetor de Ponteiros
 
   for (i = 0; i < Linhas; i++){ //Percorre as linhas do Vetor de Ponteiros
-       m[i] = (double*) malloc(Colunas * sizeof(double)); //Aloca um Vetor de Inteiros para cada posição do Vetor de Ponteiros.
+       m[i] = (double*) malloc(Colunas * sizeof(double)); //Aloca um Vetor de Inteiros para cada posiÃ§Ã£o do Vetor de Ponteiros.
        for (j = 0; j < Colunas; j++){ //Percorre o Vetor de Inteiros atual.
             m[i][j] = 0; //Inicializa com 0.
        }
